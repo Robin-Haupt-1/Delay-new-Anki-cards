@@ -10,12 +10,12 @@ import datetime
 from anki.consts import *
 
 
-def suspend_service(conf: ConfigManager):
+def suspend_new_cards(conf: ConfigManager):
     """Delay new cards for a few days (with specific settings for different decks) and activate them again after the specified time has passed"""
 
     deck_config = [{"deck": "All::1) Sprachen::💬 Begriffe", "delay": 3}, {"deck": "All::1) Sprachen::🇺🇸 Englisch::_New", "delay": 6}, {"deck": "All::1) Sprachen::🇺🇸 Englisch::_New (rare)", "delay": 3}, {"deck": "*", "delay": 1}]
     seen_cards = []
-    # process decks with specific delay settings
+
     for deck in deck_config:
         # suspend new cards
         all_cards=mw.col.find_cards(f'"deck:{deck["deck"]}" is:new -is:suspended')
@@ -50,4 +50,4 @@ def suspend_service(conf: ConfigManager):
             log(f"{len(reactivate)} cards to reactivate in deck {deck['deck']}")
         seen_cards += all_cards
 
-        #print("seen cards",seen_cards)
+
