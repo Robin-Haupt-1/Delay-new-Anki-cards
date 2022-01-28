@@ -51,31 +51,3 @@ def suspend_service(conf: ConfigManager):
         seen_cards += all_cards
 
         #print("seen cards",seen_cards)
-
-    return
-    """suspend new cards and unsuspend new cards that are old enough to be learned"""
-
-    # suspend other new cards
-    new_other_cards_ids = [mw.col.get_card(card_id) for card_id in mw.col.find_cards('is:new -is:suspended') if should_suspend(card_id)]
-    new_other_cards = [card for card in new_other_cards_ids if too_young(card)]
-
-    # save suspended card ids to config
-    conf.set(SUSPENDED_CARDS, conf.get(SUSPENDED_CARDS) + [card.id for card in new_other_cards])
-    for card in new_other_cards:
-        card.queue = anki.consts.QUEUE_TYPE_SUSPENDED
-        card.flush()
-
-    if new_other_cards:
-        log(f"{len(new_other_cards)} cards to suspend in miscellaneous decks")
-
-    # reactivate other cards after one day
-    old_other_cards = [mw.col.get_card(card_id) for card_id in mw.col.find_cards('is:new is:suspended') if should_reactivate(card_id)]
-    old_other_cards = [card for card in old_other_cards if old_enough(card)]
-    conf.set(REACTIVATED_CARDS, conf.get(REACTIVATED_CARDS) + [card.id for card in old_other_cards])
-
-    for card in old_other_cards:
-        card.queue = anki.consts.QUEUE_TYPE_NEW
-        card.flush()
-
-    if old_other_cards:
-        log(f"{len(old_other_cards)} cards to reactivate in miscellaneous decks")
