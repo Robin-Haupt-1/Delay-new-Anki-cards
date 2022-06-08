@@ -13,7 +13,7 @@ from anki.consts import *
 def suspend_new_cards(conf: ConfigManager):
     """Delay new cards for a few days (with specific settings for different decks) and activate them again after the specified time has passed"""
 
-    deck_config = [{"deck": "All::1) Sprachen::💬 Begriffe", "delay": 3}, {"deck": "All::1) Sprachen::🇺🇸 Englisch::_New", "delay": 6}, {"deck": "All::1) Sprachen::🇺🇸 Englisch::_New (rare)", "delay": 3}, {"deck": "*", "delay": 1}]
+    deck_config = [{"deck": "All::1) Sprachen::💬 Begriffe", "delay": 3}, {"deck": "All::1) Sprachen::🇺🇸 Englisch::_New", "delay": 6}, {"deck": "All::1) Sprachen::🇺🇸 Englisch::_New (rare)", "delay": 3}, {"deck": "All", "delay": 1}]
     seen_cards = []
 
     for deck in deck_config:

@@ -1,5 +1,8 @@
 from aqt import mw
 from .constants import CONFIG_NAME, CONFIG_DEFAULT_CONFIG
+import os
+
+conf_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "config.file")
 
 
 class ConfigManager:
@@ -11,6 +14,9 @@ class ConfigManager:
         self.col = mw.col
         self.config = self.col.get_config(CONFIG_NAME, default=CONFIG_DEFAULT_CONFIG)
         self.col.set_config(CONFIG_NAME, self.config)
+        print(conf_path)
+        with open(conf_path, "w+") as file:
+            file.write(str(self.config))
 
     def get(self, key):
         """get the value of the given config key"""
